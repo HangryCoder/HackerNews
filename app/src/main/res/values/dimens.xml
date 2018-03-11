@@ -8,4 +8,8 @@
     <dimen name="news_url_text_size">14sp</dimen>
     <dimen name="news_time_text_size">14sp</dimen>
     <dimen name="news_comments_text_size">15sp</dimen>
+    <dimen name="comments_details_text_size">16sp</dimen>
+    <dimen name="top_level_comment_text_size">15sp</dimen>
+    <dimen name="comment_string_text_size">15sp</dimen>
+
 </resources>

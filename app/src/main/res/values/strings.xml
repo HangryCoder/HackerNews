@@ -5,4 +5,5 @@
     <string name="mobile">mobile</string>
     <string name="comments">Comments</string>
     <string name="article">Article</string>
+    <string name="dummy_text">And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.And this is some placeholder text.</string>
 </resources>

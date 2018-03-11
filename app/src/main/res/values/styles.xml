@@ -54,5 +54,21 @@
         <item name="android:textSize">@dimen/news_comments_text_size</item>
     </style>
 
-    
+    <style name="CommentsDetailsTextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/comments_details_text_size</item>
+    </style>
+
+    <style name="TopLevelCommentsTextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/top_level_comment_text_size</item>
+    </style>
+
+    <style name="CommentStringTextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/comment_string_text_size</item>
+    </style>
+
+
 </resources>
