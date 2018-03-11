@@ -2,6 +2,7 @@ package hackernews.mobile.com.hackernews.utils;
 
 import org.json.JSONArray;
 
+import hackernews.mobile.com.hackernews.model.Story;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -45,7 +46,7 @@ public class RestClient {
         Call<JSONArray> fetchTopStoriesID();
 
         @GET("item/{id}.json?print=pretty")
-        Call<JSONArray> getStoryDetails(@Path("id") int id);
+        Call<Story> getStoryDetails(@Path("id") String id);
     }
 
 }

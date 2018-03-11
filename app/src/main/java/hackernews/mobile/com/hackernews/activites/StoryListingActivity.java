@@ -116,4 +116,27 @@ public class StoryListingActivity extends AppCompatActivity {
                 "12 mins ago", 10);
         storyArrayList.add(story);
     }
+
+    private void getTopStoryDetails(String id) {
+        RestClient.getRestClient().getStoryDetails(id).enqueue(new Callback<Story>() {
+            @Override
+            public void onResponse(Call<Story> call, Response<Story> response) {
+                progressDialog.dismiss();
+                if (response.code() == API_SUCCESS) {
+                    logd(TAG, response.body().getStoryTitle());
+                } else {
+                    showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Story> call, Throwable t) {
+                progressDialog.dismiss();
+                logd(TAG, "Error " + t.getMessage());
+                if (t instanceof SocketTimeoutException) {
+                    showToast(getApplicationContext(), getResources().getString(R.string.no_internet_connection));
+                }
+            }
+        });
+    }
 }

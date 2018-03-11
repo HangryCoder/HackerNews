@@ -41,7 +41,7 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
     public void onBindViewHolder(NewsHolder holder, int position) {
         Story story = storyArrayList.get(position);
 
-        holder.storyIdTV.setText("" + story.getStoryId());
+        holder.storyVotesTV.setText("" + story.getStoryVotes());
         holder.storyTitleTV.setText(story.getStoryTitle());
         holder.storyUrlTV.setText(story.getStoryUrl());
         holder.storyTimestampTV.setText(story.getStoryTimestamp());
@@ -59,8 +59,8 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
         TextView storyTitleTV;
         @BindView(R.id.storyUrlTV)
         TextView storyUrlTV;
-        @BindView(R.id.storyIdTV)
-        TextView storyIdTV;
+        @BindView(R.id.storyVotesTV)
+        TextView storyVotesTV;
         @BindView(R.id.storyTimestampTV)
         TextView storyTimestampTV;
         @BindView(R.id.commentsCountTV)
