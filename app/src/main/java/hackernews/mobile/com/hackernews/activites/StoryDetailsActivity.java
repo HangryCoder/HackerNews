@@ -19,7 +19,7 @@ import hackernews.mobile.com.hackernews.fragments.CommentFragment;
  * Created by soniawadji on 11/03/18.
  */
 
-public class NewsDetailsActivity extends AppCompatActivity {
+public class StoryDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolBar)
     Toolbar toolbar;

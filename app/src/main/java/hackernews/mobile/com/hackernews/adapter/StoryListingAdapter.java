@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
-import hackernews.mobile.com.hackernews.activites.NewsDetailsActivity;
+import hackernews.mobile.com.hackernews.activites.StoryDetailsActivity;
 import hackernews.mobile.com.hackernews.model.Story;
 
 /**
@@ -74,7 +74,7 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
             ButterKnife.bind(this, itemView);
 
             mainLayout.setOnClickListener(view -> {
-                Intent intent = new Intent(context, NewsDetailsActivity.class);
+                Intent intent = new Intent(context, StoryDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
