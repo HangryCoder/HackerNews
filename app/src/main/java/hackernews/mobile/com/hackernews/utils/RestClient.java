@@ -1,0 +1,51 @@
+package hackernews.mobile.com.hackernews.utils;
+
+import org.json.JSONArray;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
+import static hackernews.mobile.com.hackernews.utils.Constants.BASE_URL;
+import static hackernews.mobile.com.hackernews.utils.Constants.DEBUG;
+import static hackernews.mobile.com.hackernews.utils.Constants.FETCH_TOP_STORIES;
+
+/**
+ * Created by soniawadji on 11/03/18.
+ */
+
+public class RestClient {
+
+
+    private static HttpLoggingInterceptor.Level level = DEBUG ? HttpLoggingInterceptor.Level.BODY
+            : HttpLoggingInterceptor.Level.NONE;
+
+    public static Retrofit getRetrofitBuilder() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(level))
+                .build();
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    public static HackerNewsAPI getRestClient() {
+        return getRetrofitBuilder().create(HackerNewsAPI.class);
+    }
+
+    public interface HackerNewsAPI {
+        @GET(FETCH_TOP_STORIES)
+        Call<JSONArray> fetchTopStoriesID();
+
+        @GET("item/{id}.json?print=pretty")
+        Call<JSONArray> getStoryDetails(@Path("id") int id);
+    }
+
+}

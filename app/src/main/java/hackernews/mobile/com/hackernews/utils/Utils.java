@@ -4,13 +4,13 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import static hackernews.mobile.com.hackernews.utils.Constants.DEBUG;
+
 /**
  * Created by soniawadji on 11/03/18.
  */
 
 public class Utils {
-
-    private static final boolean DEBUG = true;
 
     public static void logd(String TAG, String message) {
         if (DEBUG) {

@@ -1,7 +1,6 @@
 package hackernews.mobile.com.hackernews.activites;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,10 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -23,12 +20,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 
+import static hackernews.mobile.com.hackernews.utils.Constants.RC_SIGN_IN;
 import static hackernews.mobile.com.hackernews.utils.Utils.logd;
 import static hackernews.mobile.com.hackernews.utils.Utils.showToast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 101;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.googleSignInBtn)
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             logd(TAG, "Email " + currentUser.getEmail());
             showToast(this, "Welcome " + currentUser.getDisplayName());
 
-            Intent intent = new Intent(this, NewsListingActivity.class);
+            Intent intent = new Intent(this, StoryListingActivity.class);
             startActivity(intent);
             finish();
         }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +14,21 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
-import hackernews.mobile.com.hackernews.activites.MainActivity;
 import hackernews.mobile.com.hackernews.activites.NewsDetailsActivity;
-import hackernews.mobile.com.hackernews.model.News;
+import hackernews.mobile.com.hackernews.model.Story;
 
 /**
  * Created by soniawadji on 10/03/18.
  */
 
-public class NewsListingAdapter extends RecyclerView.Adapter<NewsListingAdapter.NewsHolder> {
+public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapter.NewsHolder> {
 
     private Context context;
-    private ArrayList<News> newsArrayList = new ArrayList<>();
+    private ArrayList<Story> storyArrayList = new ArrayList<>();
 
-    public NewsListingAdapter(Context context, ArrayList<News> newsArrayList) {
+    public StoryListingAdapter(Context context, ArrayList<Story> storyArrayList) {
         this.context = context;
-        this.newsArrayList = newsArrayList;
+        this.storyArrayList = storyArrayList;
     }
 
     @Override
@@ -41,30 +39,30 @@ public class NewsListingAdapter extends RecyclerView.Adapter<NewsListingAdapter.
 
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
-        News news = newsArrayList.get(position);
+        Story story = storyArrayList.get(position);
 
-        holder.newsIdTV.setText("" + news.getNewsId());
-        holder.newsTitleTV.setText(news.getNewsTitle());
-        holder.newsUrlTV.setText(news.getNewsUrl());
-        holder.newsTimestampTV.setText(news.getNewsTimestamp());
-        holder.commentsCountTV.setText("" + news.getCommentsCount());
+        holder.storyIdTV.setText("" + story.getStoryId());
+        holder.storyTitleTV.setText(story.getStoryTitle());
+        holder.storyUrlTV.setText(story.getStoryUrl());
+        holder.storyTimestampTV.setText(story.getStoryTimestamp());
+        holder.commentsCountTV.setText("" + story.getCommentsCount());
     }
 
     @Override
     public int getItemCount() {
-        return newsArrayList.size();
+        return storyArrayList.size();
     }
 
     public class NewsHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.newsTitleTV)
-        TextView newsTitleTV;
-        @BindView(R.id.newsUrlTV)
-        TextView newsUrlTV;
-        @BindView(R.id.newsIdTV)
-        TextView newsIdTV;
-        @BindView(R.id.newsTimestampTV)
-        TextView newsTimestampTV;
+        @BindView(R.id.storyTitleTV)
+        TextView storyTitleTV;
+        @BindView(R.id.storyUrlTV)
+        TextView storyUrlTV;
+        @BindView(R.id.storyIdTV)
+        TextView storyIdTV;
+        @BindView(R.id.storyTimestampTV)
+        TextView storyTimestampTV;
         @BindView(R.id.commentsCountTV)
         TextView commentsCountTV;
         @BindView(R.id.mainLayout)
