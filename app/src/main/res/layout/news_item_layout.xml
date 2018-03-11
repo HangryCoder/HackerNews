@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/mainLayout"
+    android:layout_height="wrap_content"
+    android:background="@color/light_grey">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <TextView
+        android:id="@+id/newsIdTV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/light_orange"
+        android:gravity="center"
+        android:text="41"
+        android:theme="@style/NewsIdTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/newsTimestampTV"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/newsTitleTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Introduction to HTML components"
+        android:theme="@style/NewsTitleTextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newsUrlTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="www.w3c.org"
+        android:theme="@style/NewsUrlTextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/newsTitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/newsTitleTV" />
+
+    <TextView
+        android:id="@+id/newsTimestampTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1 hour ago . user01"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:theme="@style/NewsTimestampTextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/newsUrlTV"
+        app:layout_constraintTop_toBottomOf="@+id/newsUrlTV" />
+
+   <!-- <android.support.v4.widget.Space
+        android:id="@+id/spacer"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newsTimestampTV" />-->
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <LinearLayout
+        android:id="@+id/commentsLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/newsTimestampTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/commentsImageView"
+            android:layout_width="@dimen/comments_icon_size"
+            android:layout_height="@dimen/comments_icon_size"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/commentsCountTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="56"
+            android:textAlignment="center"
+            android:theme="@style/NewsCommentsCountTextView" />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hacker_new_title_size">30sp</dimen>
+    <dimen name="toolbar_title_size">20sp</dimen>
+    <dimen name="comments_icon_size">30dp</dimen>
+    <dimen name="news_title_text_size">18sp</dimen>
+    <dimen name="news_id_text_size">25sp</dimen>
+    <dimen name="news_url_text_size">14sp</dimen>
+    <dimen name="news_time_text_size">14sp</dimen>
+    <dimen name="news_comments_text_size">15sp</dimen>
+</resources>
