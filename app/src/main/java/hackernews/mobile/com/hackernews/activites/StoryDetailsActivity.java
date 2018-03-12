@@ -68,7 +68,7 @@ public class StoryDetailsActivity extends AppCompatActivity {
 
         //Fetching Story which is passed between Activities
         story = getIntent().getParcelableExtra(INTENT_STORY);
-        commentsIdsArrayList = story.getCommentsIds();
+        commentsIdsArrayList = getIntent().getStringArrayListExtra(INTENT_COMMENT_IDS);
         Utils.logd(TAG, "story " + story.getCommentsIds());
 
         setViews();

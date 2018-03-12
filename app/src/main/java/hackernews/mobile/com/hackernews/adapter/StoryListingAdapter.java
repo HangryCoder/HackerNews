@@ -18,6 +18,7 @@ import hackernews.mobile.com.hackernews.R;
 import hackernews.mobile.com.hackernews.activites.StoryDetailsActivity;
 import hackernews.mobile.com.hackernews.model.Story;
 
+import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_COMMENT_IDS;
 import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_STORY;
 
 /**
@@ -78,10 +79,13 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
 
             mainLayout.setOnClickListener(view -> {
                 Story story = storyArrayList.get(getAdapterPosition());
+                ArrayList<String> commentIdsArrayList = new ArrayList<>();
+                commentIdsArrayList.addAll(story.getCommentsIds());
                 Intent intent = new Intent(context, StoryDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(INTENT_STORY, story);
+                bundle.putStringArrayList(INTENT_COMMENT_IDS, commentIdsArrayList);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
 

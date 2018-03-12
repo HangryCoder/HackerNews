@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -33,32 +34,10 @@ public class Story extends RealmObject implements Parcelable {
     @SerializedName("by")
     private String storyBy;
     @SerializedName("kids")
-    @Ignore
-    private ArrayList<String> commentsIds;
+    private RealmList<String> commentsIds;
 
     public Story() {
     }
-
-    public Story(String storyId, String storyTitle, String storyUrl, String storyTimestamp, int commentsCount) {
-        this.storyId = storyId;
-        this.commentsCount = commentsCount;
-        this.storyTitle = storyTitle;
-        this.storyUrl = storyUrl;
-        this.storyTimestamp = storyTimestamp;
-    }
-
-    public Story(String storyId, int commentsCount, String storyTitle, String storyUrl, String storyTimestamp,
-                 int storyVotes, String storyBy, ArrayList<String> commentsIds) {
-        this.storyId = storyId;
-        this.commentsCount = commentsCount;
-        this.storyTitle = storyTitle;
-        this.storyUrl = storyUrl;
-        this.storyTimestamp = storyTimestamp;
-        this.storyVotes = storyVotes;
-        this.storyBy = storyBy;
-        this.commentsIds = commentsIds;
-    }
-
 
     protected Story(Parcel in) {
         storyId = in.readString();
@@ -68,7 +47,6 @@ public class Story extends RealmObject implements Parcelable {
         storyTimestamp = in.readString();
         storyVotes = in.readInt();
         storyBy = in.readString();
-        commentsIds = in.createStringArrayList();
     }
 
     public static final Creator<Story> CREATOR = new Creator<Story>() {
@@ -99,11 +77,11 @@ public class Story extends RealmObject implements Parcelable {
         this.storyBy = storyBy;
     }
 
-    public ArrayList<String> getCommentsIds() {
+    public RealmList<String> getCommentsIds() {
         return commentsIds;
     }
 
-    public void setCommentsIds(ArrayList<String> commentsIds) {
+    public void setCommentsIds(RealmList<String> commentsIds) {
         this.commentsIds = commentsIds;
     }
 
