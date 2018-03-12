@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -76,7 +77,16 @@ public class StoryListingActivity extends AppCompatActivity {
             public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
-                    logd(TAG, response.body().toString());
+                    // logd(TAG, response.body().toString());
+                    int topStoriesLength = response.body().length();
+                    JSONArray topStoriesArray = response.body();
+                    for (int i = 0; i < topStoriesLength; i++) {
+                        try {
+                            getTopStoryDetails(topStoriesArray.getString(i));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }
@@ -118,6 +128,9 @@ public class StoryListingActivity extends AppCompatActivity {
     }
 
     private void getTopStoryDetails(String id) {
+
+        progressDialog.show();
+
         RestClient.getRestClient().getStoryDetails(id).enqueue(new Callback<Story>() {
             @Override
             public void onResponse(Call<Story> call, Response<Story> response) {

@@ -21,7 +21,7 @@ import hackernews.mobile.com.hackernews.model.Story;
  * Created by soniawadji on 10/03/18.
  */
 
-public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapter.NewsHolder> {
+public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapter.StoryHolder> {
 
     private Context context;
     private ArrayList<Story> storyArrayList = new ArrayList<>();
@@ -32,13 +32,13 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
     }
 
     @Override
-    public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.news_item_layout, parent, false);
-        return new NewsHolder(view);
+        return new StoryHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsHolder holder, int position) {
+    public void onBindViewHolder(StoryHolder holder, int position) {
         Story story = storyArrayList.get(position);
 
         holder.storyVotesTV.setText("" + story.getStoryVotes());
@@ -53,7 +53,7 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
         return storyArrayList.size();
     }
 
-    public class NewsHolder extends RecyclerView.ViewHolder {
+    public class StoryHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.storyTitleTV)
         TextView storyTitleTV;
@@ -68,7 +68,7 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
         @BindView(R.id.mainLayout)
         ConstraintLayout mainLayout;
 
-        public NewsHolder(View itemView) {
+        public StoryHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
