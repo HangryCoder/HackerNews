@@ -219,6 +219,7 @@ public class StoryListingActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        //Always close realm in onDestroy!!
         if (realm != null && !realm.isClosed()) {
             realm.close();
         }

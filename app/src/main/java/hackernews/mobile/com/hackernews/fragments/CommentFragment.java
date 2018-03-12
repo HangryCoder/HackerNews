@@ -23,6 +23,8 @@ import hackernews.mobile.com.hackernews.model.Comments;
 import hackernews.mobile.com.hackernews.utils.RestClient;
 import hackernews.mobile.com.hackernews.utils.Utils;
 import hackernews.mobile.com.hackernews.utils.VerticalSpaceItemDecoration;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +48,7 @@ public class CommentFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<String> commentsIdsArrayList = new ArrayList<>();
     private ProgressDialog progressDialog;
+    private Realm realm;
 
     @Nullable
     @Override
@@ -64,19 +67,31 @@ public class CommentFragment extends Fragment {
         if (commentsIdsArrayList != null) {
             commentsIdSize = commentsIdsArrayList.size();
         }
-        Utils.logd(TAG, "size " + commentsIdSize);
 
+        realm = Realm.getDefaultInstance();
+
+        /** Fetching StoryList from Realm*/
+        RealmResults<Comments> commentsRealmResults = realm.where(Comments.class).findAll();
+        commentsArrayList.clear();
+        commentsArrayList.addAll(commentsRealmResults);
+
+        /** Calling getComments for the particular ids
+         for fetching Comments Details */
         for (int i = 0; i < commentsIdSize; i++) {
             getComments(commentsIdsArrayList.get(i));
         }
 
+        settingUpRecyclerView();
+
+        return view;
+    }
+
+    private void settingUpRecyclerView() {
         commentsAdapter = new CommentsAdapter(getActivity(), commentsArrayList);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
         recyclerView.setAdapter(commentsAdapter);
-
-        return view;
     }
 
     private void getComments(String id) {
@@ -88,8 +103,17 @@ public class CommentFragment extends Fragment {
             public void onResponse(Call<Comments> call, Response<Comments> response) {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
-                    commentsArrayList.add(response.body());
-                    commentsAdapter.notifyDataSetChanged();
+                    Comments comments = response.body();
+                    try (Realm realmInstance = Realm.getDefaultInstance()) {
+                        realmInstance.executeTransaction(realm -> {
+                            realmInstance.insertOrUpdate(comments);
+
+                            Utils.logd(TAG, "onSuccess ");
+                            commentsArrayList.add(comments);
+                            commentsAdapter.notifyDataSetChanged();
+                        });
+                    }
+
                 } else {
                     showToast(getActivity(), getResources().getString(R.string.something_went_wrong));
                 }
@@ -108,5 +132,14 @@ public class CommentFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (realm != null && !realm.isClosed()) {
+            realm.close();
+        }
     }
 }
