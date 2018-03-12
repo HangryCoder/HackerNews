@@ -17,18 +17,17 @@ import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 import hackernews.mobile.com.hackernews.adapter.StoryListingAdapter;
 import hackernews.mobile.com.hackernews.model.Story;
-import hackernews.mobile.com.hackernews.model.TopStories;
 import hackernews.mobile.com.hackernews.utils.RestClient;
 import hackernews.mobile.com.hackernews.utils.Utils;
 import hackernews.mobile.com.hackernews.utils.VerticalSpaceItemDecoration;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static hackernews.mobile.com.hackernews.utils.Constants.API_SUCCESS;
+import static hackernews.mobile.com.hackernews.utils.Constants.NUMBER_OF_ITEM_TO_LOAD;
 import static hackernews.mobile.com.hackernews.utils.Utils.logd;
 import static hackernews.mobile.com.hackernews.utils.Utils.showToast;
 
@@ -63,7 +62,9 @@ public class StoryListingActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
-        getStories();
+        RealmResults<Story> storyRealmResults = realm.where(Story.class).findAll();
+        storyArrayList.clear();
+        storyArrayList.addAll(storyRealmResults);
 
         storyListingAdapter = new StoryListingAdapter(this, storyArrayList);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -71,6 +72,12 @@ public class StoryListingActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
         recyclerView.setAdapter(storyListingAdapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getStories();
     }
 
     private void getStories() {
@@ -86,105 +93,32 @@ public class StoryListingActivity extends AppCompatActivity {
                     logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
 
-                  /*  RealmResults<Story> storyRealmResults =
-                            realm.where(Story.class).findAll();
-                    Utils.logd(TAG, "stories " + storyRealmResults);*/
-
-                   /* if (storyRealmResults.size() == 0) {
-                        for (int i = 0; i < 2; i++) {
-                            getTopStoryDetails(topStoriesArray.get(i));
-                        }
-                    } else {
-                        for (Story story :
-                                storyRealmResults) {
-                            for (int i = 0; i < 2; i++) {
-                                getTopStoryDetails(story.getStoryId());
-                            }
-                        }
-                    }*/
-
-                   /* Realm realm = null;
-                    try { // I could use try-with-resources here
-                        realm = Realm.getDefaultInstance();
-                        Realm finalRealm = realm;
-                        realm.executeTransactionAsync(realm1 -> {
-                            Utils.logd(TAG, "stories ");
-                            Story story = new Story();
-                            story.setStoryId(topStoriesArray.get(0));
-                            finalRealm.insertOrUpdate(story);
-                        }, () -> {
-                            //onSuccess
-                            Utils.logd(TAG, "onSuccess");
-                            RealmResults<Story> storyRealmResults =
-                                    finalRealm.where(Story.class).findAll();
-                            Utils.logd(TAG, "stories " + storyRealmResults);
-
-                            for (Story story :
-                                    storyRealmResults) {
-                                // if (topStories.getStory() == null) {
-                                for (int i = 0; i < 2; i++) {
-                                    getTopStoryDetails(story.getStoryId());
-                                }
-                                //}
-                            }
-                        });
-                    } finally {
-                        if (realm != null) {
-                            realm.close();
-                        }
-                    }
-*/
-                   /* try (Realm realmInstance = Realm.getDefaultInstance()) {
-                        realmInstance.executeTransactionAsync(realm -> {
-
-                            Utils.logd(TAG, "stories ");
-
-                            for (int i = 0; i < topStoriesLength; i++) {
-                                Story story = new Story();
-                                story.setStoryId(topStoriesArray.get(i));
-                                realmInstance.insertOrUpdate(story);
-                            }
-                        }, () -> {
-                            //onSuccess
-                            Utils.logd(TAG, "onSuccess");
-                            RealmResults<Story> storyRealmResults =
-                                    realmInstance.where(Story.class).findAll();
-                            Utils.logd(TAG, "stories " + storyRealmResults);
-
-                            for (Story story :
-                                    storyRealmResults) {
-                                // if (topStories.getStory() == null) {
-                                for (int i = 0; i < 2; i++) {
-                                    getTopStoryDetails(story.getStoryId());
-                                }
-                                //}
-                            }
-                        }, error -> {
-                            //onError
-                            Utils.logd(TAG, "onError " + error.getMessage());
-                        });
-                    }*/
-
-                    for (int i = 0; i < 2; i++) {
+                    /**
+                     * Loading only 5 Items per network call...
+                     * Rest needs to be refreshed!!
+                     * */
+                    int counter = 0;
+                    for (int i = 0; i < topStoriesLength; i++) {
                         Story story = realm.where(Story.class).equalTo("storyId",
                                 topStoriesArray.get(i)).findFirst();
                         if (story == null) {
-                            // for (int i = 0; i < 2; i++) {
-                            getTopStoryDetails(topStoriesArray.get(i));
-                            //}
+                            if (counter < NUMBER_OF_ITEM_TO_LOAD) {
+                                counter++;
+                                getTopStoryDetails(topStoriesArray.get(i));
+                            } else {
+                                break;
+                            }
                         } else {
-                            RealmResults<Story> storyRealmResults = realm.where(Story.class).findAll();
+                            //Do Nothing.. Since Its already present!!
+                           /* RealmResults<Story> storyRealmResults = realm.where(Story.class).findAll();
                             if (storyRealmResults.size() > 0) {
                                 storyArrayList.clear();
                                 storyArrayList.addAll(storyRealmResults);
                                 storyListingAdapter.notifyDataSetChanged();
-                            }
+                            }*/
                         }
                     }
 
-                    /*for (int i = 0; i < 2; i++) {
-                        getTopStoryDetails(topStoriesArray.get(i));
-                    }*/
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }

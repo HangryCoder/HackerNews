@@ -22,4 +22,6 @@ public class Constants {
 
     public static final String INTENT_STORY_URL = "StoryUrl";
 
+    public static final int NUMBER_OF_ITEM_TO_LOAD = 5;
+
 }
