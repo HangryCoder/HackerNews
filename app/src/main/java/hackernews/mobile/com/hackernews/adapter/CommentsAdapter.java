@@ -2,6 +2,8 @@ package hackernews.mobile.com.hackernews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         holder.commentDetailsTV.setText(comments.getCommentDate() + " - " + comments.getCommentTime()
                 + " . " + comments.getCommentUser());
-        holder.commentMessage.setText(comments.getCommentString());
+        Spanned sp = Html.fromHtml(comments.getCommentString());
+        holder.commentMessage.setText(sp);
     }
 
     @Override
