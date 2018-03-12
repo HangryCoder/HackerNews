@@ -3,11 +3,14 @@ package hackernews.mobile.com.hackernews.activites;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -37,8 +40,17 @@ public class StoryDetailsActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.collapsibleToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.storyTitleTV)
+    TextView storyTitleTV;
+    @BindView(R.id.storyUrlTV)
+    TextView storyUrlTV;
+    @BindView(R.id.storyDatePlusUserTV)
+    TextView storyDatePlusUserTV;
+
     private Story story;
     private ArrayList<String> commentsIdsArrayList = new ArrayList<>();
 
@@ -59,7 +71,18 @@ public class StoryDetailsActivity extends AppCompatActivity {
         commentsIdsArrayList = story.getCommentsIds();
         Utils.logd(TAG, "story " + story.getCommentsIds());
 
-        //collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent)); // transperent color = #00000000
+        storyTitleTV.setText(story.getStoryTitle());
+        storyDatePlusUserTV.setText(Utils.getDateFormatted(Long.parseLong(story.getStoryTimestamp()))
+                + " . " + story.getStoryBy());
+
+        if (story.getStoryUrl() != null) {
+            storyUrlTV.setText(story.getStoryUrl());
+        } else {
+            storyUrlTV.setVisibility(View.GONE);
+        }
+
+        //collapsingToolbarLayout.setTitle(story.getStoryTitle());
+        //collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.white)); // transperent color = #00000000
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);

@@ -29,6 +29,23 @@ public class Utils {
         }
     }
 
+    public static String getDateFormatted(long timestamp) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            TimeZone tz = TimeZone.getDefault();
+            calendar.setTimeInMillis(timestamp * 1000);
+            calendar.setTimeZone(tz);
+            Date calculatedDate = (Date) calendar.getTime();
+            SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+            String commentDate = dayFormat.format(calculatedDate) + " " + getMonthInString(calculatedDate.getMonth())
+                    + ", " + yearFormat.format(calculatedDate);
+            return commentDate;
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
     public static String getCommentDateTimeFormatted(long timestamp) {
         try {
             Calendar calendar = Calendar.getInstance();
@@ -38,10 +55,7 @@ public class Utils {
             Date calculatedDate = (Date) calendar.getTime();
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             String commentTime = timeFormat.format(calculatedDate);
-            SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            String commentDate = dayFormat.format(calculatedDate) + " " + getMonthInString(calculatedDate.getMonth())
-                    + ", " + yearFormat.format(calculatedDate);
+            String commentDate = getDateFormatted(timestamp);
             return commentDate + " - " + commentTime;
         } catch (Exception e) {
         }

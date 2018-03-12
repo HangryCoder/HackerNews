@@ -79,18 +79,21 @@ public class StoryListingActivity extends AppCompatActivity {
                     logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
 
-                    try (Realm realmInstance = Realm.getDefaultInstance()) {
+                    /*try (Realm realmInstance = Realm.getDefaultInstance()) {
                         realmInstance.executeTransactionAsync(realm -> {
 
                         }, () -> {
                             //onSuccess
-                            /*for (int i = 0; i < 2; i++) {
+                            for (int i = 0; i < 2; i++) {
                                 getTopStoryDetails(topStoriesArray.get(i));
-                            }*/
+                            }
                         }, error -> {
                             //onError
 
                         });
+                    }*/
+                    for (int i = 0; i < 2; i++) {
+                        getTopStoryDetails(topStoriesArray.get(i));
                     }
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));

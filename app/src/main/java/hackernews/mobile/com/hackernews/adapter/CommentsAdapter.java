@@ -44,8 +44,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         holder.commentDetailsTV.setText(Utils.getCommentDateTimeFormatted(Long.parseLong(comments.getCommentTime()))
                 + " . " + comments.getCommentUser());
         //Conversion of HTML text to formatted string in TextView
-        Spanned sp = Html.fromHtml(comments.getCommentString());
-        holder.commentMessage.setText(sp);
+        if (comments.getCommentString() != null) {
+            Spanned sp = Html.fromHtml(comments.getCommentString());
+            holder.commentMessage.setText(sp);
+        }
+
     }
 
     @Override

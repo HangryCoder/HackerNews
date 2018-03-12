@@ -12,5 +12,8 @@
     <dimen name="top_level_comment_text_size">15sp</dimen>
     <dimen name="comment_string_text_size">15sp</dimen>
     <dimen name="no_articles_text_size">20sp</dimen>
+    <dimen name="story_title_parallex_text_size">20sp</dimen>
+    <dimen name="story_url_parallex_text_size">13sp</dimen>
+    <dimen name="story_date_parallex_text_size">14sp</dimen>
 
 </resources>
