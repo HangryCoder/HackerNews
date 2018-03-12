@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import static hackernews.mobile.com.hackernews.utils.Constants.DEBUG;
 
@@ -105,5 +106,21 @@ public class Utils {
                 break;
         }
         return monthString;
+    }
+
+    public static String getStoryListingTime(long timestamp) {
+        long timeSinceLastPostedLong = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - timestamp);
+        String timeSinceLastPosted = "";
+
+        if (timeSinceLastPostedLong < 60) {
+            return timeSinceLastPostedLong + " mins ago";
+        } else if (timeSinceLastPostedLong >= 60 && timeSinceLastPostedLong < 60 * 24) {  //Greater than 60 mins & less than a day
+            timeSinceLastPostedLong = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - timestamp);
+            return timeSinceLastPostedLong + " hours ago";
+        } else {    //Greater than 24 hours
+            timeSinceLastPostedLong = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - timestamp);
+            return timeSinceLastPostedLong + " days ago";
+        }
+
     }
 }

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 import hackernews.mobile.com.hackernews.activites.StoryDetailsActivity;
 import hackernews.mobile.com.hackernews.model.Story;
+import hackernews.mobile.com.hackernews.utils.Utils;
 
 import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_COMMENT_IDS;
 import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_STORY;
@@ -48,7 +49,9 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
         holder.storyVotesTV.setText("" + story.getStoryVotes());
         holder.storyTitleTV.setText(story.getStoryTitle());
         holder.storyUrlTV.setText(story.getStoryUrl());
-        holder.storyTimestampTV.setText(story.getStoryTimestamp());
+        holder.storyTimestampTV.setText(Utils.getStoryListingTime(
+                Long.parseLong(story.getStoryTimestamp()) * 1000)
+                + " . " + story.getStoryBy());
         holder.commentsCountTV.setText("" + story.getCommentsCount());
     }
 

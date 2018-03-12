@@ -47,12 +47,15 @@ public class StoryListingActivity extends AppCompatActivity {
     TextView toolbarTitleTV;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.updatedLastTimeTV)
+    TextView updatedLastTimeTV;
 
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<Story> storyArrayList = new ArrayList<>();
     private StoryListingAdapter storyListingAdapter;
     private ProgressDialog progressDialog;
     private Realm realm;
+    private static long currentTimestamp = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,13 +76,28 @@ public class StoryListingActivity extends AppCompatActivity {
         storyArrayList.clear();
         storyArrayList.addAll(storyRealmResults);
 
-        /** Setting Time Accordingly*/
-
         settingSwipeToRefresh();
 
         settingUpRecyclerView();
 
         getStories();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /** Setting Time Accordingly*/
+        if (currentTimestamp == 0) {
+            updatedLastTimeTV.setText("Not Updated Yet");
+        } else {
+            updatedLastTimeTV.setText("Updated " + Utils.getStoryListingTime(currentTimestamp));
+        }
+    }
+
+    private void setLastUpdatedTextView() {
+        /** Setting Time Accordingly*/
+        currentTimestamp = System.currentTimeMillis();
+        updatedLastTimeTV.setText("Updated " + Utils.getStoryListingTime(currentTimestamp));
     }
 
     private void settingUpRecyclerView() {
@@ -121,6 +139,8 @@ public class StoryListingActivity extends AppCompatActivity {
                     int topStoriesLength = response.body().size();
                     logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
+
+                    setLastUpdatedTextView();
 
                     /**
                      * Loading only 5 Items per network call...
@@ -187,6 +207,8 @@ public class StoryListingActivity extends AppCompatActivity {
                     try (Realm realmInstance = Realm.getDefaultInstance()) {
                         realmInstance.executeTransaction(realm -> {
                             realmInstance.insertOrUpdate(story);
+
+                            setLastUpdatedTextView();
 
                             Utils.logd(TAG, "onSuccess ");
                             storyArrayList.add(0, story);

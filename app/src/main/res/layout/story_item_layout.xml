@@ -92,7 +92,7 @@
             android:id="@+id/commentsImageView"
             android:layout_width="@dimen/comments_icon_size"
             android:layout_height="@dimen/comments_icon_size"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/chat" />
 
         <TextView
             android:id="@+id/commentsCountTV"
