@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Comments {
 
-    private String commentDate;
     @SerializedName("time")
     private String commentTime;
     @SerializedName("by")
@@ -16,20 +15,10 @@ public class Comments {
     @SerializedName("text")
     private String commentString;
 
-    public Comments(String commentDate, String commentTime, String commentUser, String commentString) {
-        this.commentDate = commentDate;
+    public Comments(String commentTime, String commentUser, String commentString) {
         this.commentTime = commentTime;
         this.commentUser = commentUser;
         this.commentString = commentString;
-    }
-
-
-    public String getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(String commentDate) {
-        this.commentDate = commentDate;
     }
 
     public String getCommentTime() {

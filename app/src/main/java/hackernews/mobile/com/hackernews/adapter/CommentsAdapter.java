@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 import hackernews.mobile.com.hackernews.model.Comments;
+import hackernews.mobile.com.hackernews.utils.Utils;
 
 /**
  * Created by soniawadji on 11/03/18.
@@ -40,8 +41,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(CommentsHolder holder, int position) {
         Comments comments = commentsArrayList.get(position);
 
-        holder.commentDetailsTV.setText(comments.getCommentDate() + " - " + comments.getCommentTime()
+        holder.commentDetailsTV.setText(Utils.getCommentDateTimeFormatted(Long.parseLong(comments.getCommentTime()))
                 + " . " + comments.getCommentUser());
+        //Conversion of HTML text to formatted string in TextView
         Spanned sp = Html.fromHtml(comments.getCommentString());
         holder.commentMessage.setText(sp);
     }
