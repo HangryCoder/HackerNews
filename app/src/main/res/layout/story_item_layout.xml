@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,51 +22,53 @@
         android:gravity="center"
         android:text="41"
         android:theme="@style/NewsIdTextView"
-        app:layout_constraintBottom_toBottomOf="@+id/storyTimestampTV"
+        app:layout_constraintBottom_toBottomOf="@+id/storyDetailsMainLayout"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/storyTitleTV"
+    <LinearLayout
+        android:id="@+id/storyDetailsMainLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:text="Introduction to HTML components"
-        android:theme="@style/NewsTitleTextView"
+        android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="0dp">
 
-    <TextView
-        android:id="@+id/storyUrlTV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:lines="1"
-        android:text="www.w3c.org"
-        android:theme="@style/NewsUrlTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/storyTitleTV"
-        app:layout_constraintTop_toBottomOf="@+id/storyTitleTV" />
+        <TextView
+            android:id="@+id/storyTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Introduction to HTML components"
+            android:theme="@style/NewsTitleTextView" />
 
-    <TextView
-        android:id="@+id/storyTimestampTV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="1 hour ago . user01"
-        android:theme="@style/NewsTimestampTextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/storyUrlTV"
-        app:layout_constraintTop_toBottomOf="@+id/storyUrlTV" />
+        <TextView
+            android:id="@+id/storyUrlTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="www.w3c.org"
+            android:theme="@style/NewsUrlTextView" />
+
+        <TextView
+            android:id="@+id/storyTimestampTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="1 hour ago . user01"
+            android:theme="@style/NewsTimestampTextView" />
+
+    </LinearLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -80,7 +83,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/storyTimestampTV"
+        app:layout_constraintBottom_toBottomOf="@+id/storyDetailsMainLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent">
@@ -100,6 +103,5 @@
             android:theme="@style/NewsCommentsCountTextView" />
 
     </LinearLayout>
-
 
 </android.support.constraint.ConstraintLayout>

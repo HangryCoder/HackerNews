@@ -103,10 +103,6 @@ public class StoryListingActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * If isPullToRefresh = true - dismiss refresh
-     * else dismissProgressDialog
-     */
     private void getStories() {
         if (!swipeRefreshLayout.isRefreshing()) {
             progressDialog.show();
