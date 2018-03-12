@@ -71,6 +71,13 @@ public class StoryDetailsActivity extends AppCompatActivity {
         commentsIdsArrayList = story.getCommentsIds();
         Utils.logd(TAG, "story " + story.getCommentsIds());
 
+        setViews();
+
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setViews() {
         storyTitleTV.setText(story.getStoryTitle());
         storyDatePlusUserTV.setText(Utils.getDateFormatted(Long.parseLong(story.getStoryTimestamp()))
                 + " . " + story.getStoryBy());
@@ -80,12 +87,6 @@ public class StoryDetailsActivity extends AppCompatActivity {
         } else {
             storyUrlTV.setVisibility(View.GONE);
         }
-
-        //collapsingToolbarLayout.setTitle(story.getStoryTitle());
-        //collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.white)); // transperent color = #00000000
-
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {

@@ -11,4 +11,5 @@
     <string name="time_out">Timeout Error</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="no_articles_available">No Articles Available</string>
+    <string name="topStories">Top Stories</string>
 </resources>

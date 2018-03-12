@@ -8,13 +8,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by soniawadji on 10/03/18.
  */
 
-public class Story /*extends RealmObject*/ implements Parcelable {
+public class Story extends RealmObject implements Parcelable {
 
     @PrimaryKey
     @SerializedName("id")
@@ -32,6 +33,7 @@ public class Story /*extends RealmObject*/ implements Parcelable {
     @SerializedName("by")
     private String storyBy;
     @SerializedName("kids")
+    @Ignore
     private ArrayList<String> commentsIds;
 
     public Story() {
