@@ -11,5 +11,6 @@
     <dimen name="comments_details_text_size">16sp</dimen>
     <dimen name="top_level_comment_text_size">15sp</dimen>
     <dimen name="comment_string_text_size">15sp</dimen>
+    <dimen name="no_articles_text_size">20sp</dimen>
 
 </resources>

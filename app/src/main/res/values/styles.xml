@@ -70,5 +70,11 @@
         <item name="android:textSize">@dimen/comment_string_text_size</item>
     </style>
 
+    <style name="NoArticlesTextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/no_articles_text_size</item>
+    </style>
+
 
 </resources>

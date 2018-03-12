@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,8 @@ public class ArticleFragment extends Fragment {
 
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.noArticlesAvailableTV)
+    TextView noArticlesAvailableTV;
     private String url = "";
 
     @Nullable
@@ -38,13 +41,17 @@ public class ArticleFragment extends Fragment {
         //else display a text
         if(url!=null){
             if(!url.isEmpty()){
+                noArticlesAvailableTV.setVisibility(View.INVISIBLE);
+                webView.setVisibility(View.VISIBLE);
                 webView.setWebViewClient(new ArticleBrowser());
                 webView.loadUrl(url);
             }else{
-
+                noArticlesAvailableTV.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.INVISIBLE);
             }
         }else{
-
+            noArticlesAvailableTV.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.INVISIBLE);
         }
 
         return view;
