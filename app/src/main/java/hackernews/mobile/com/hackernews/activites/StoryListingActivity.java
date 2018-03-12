@@ -3,6 +3,7 @@ package hackernews.mobile.com.hackernews.activites;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class StoryListingActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.toolbarTitleTV)
     TextView toolbarTitleTV;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<Story> storyArrayList = new ArrayList<>();
@@ -62,32 +65,59 @@ public class StoryListingActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
+        /** Fetching StoryList from Realm*/
         RealmResults<Story> storyRealmResults = realm.where(Story.class).findAll();
         storyArrayList.clear();
         storyArrayList.addAll(storyRealmResults);
 
+        /** Setting Time Accordingly*/
+
+        settingSwipeToRefresh();
+
+        settingUpRecyclerView();
+
+        getStories();
+    }
+
+    private void settingUpRecyclerView() {
         storyListingAdapter = new StoryListingAdapter(this, storyArrayList);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
         recyclerView.setAdapter(storyListingAdapter);
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getStories();
+    private void settingSwipeToRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(this::getStories);
     }
 
+    private void dismissProgressDialog() {
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    void onItemsLoadComplete() {
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    /**
+     * If isPullToRefresh = true - dismiss refresh
+     * else dismissProgressDialog
+     */
     private void getStories() {
-
-        progressDialog.show();
+        if (!swipeRefreshLayout.isRefreshing()) {
+            progressDialog.show();
+        } else {
+            swipeRefreshLayout.setRefreshing(true);
+        }
 
         RestClient.getRestClient().fetchTopStoriesID().enqueue(new Callback<ArrayList<String>>() {
             @Override
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
                 if (response.code() == API_SUCCESS) {
                     int topStoriesLength = response.body().size();
                     logd(TAG, "Size " + topStoriesLength);
@@ -126,7 +156,8 @@ public class StoryListingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<String>> call, Throwable t) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
+                onItemsLoadComplete();
                 logd(TAG, "Error " + t.getMessage());
                 if (t instanceof SocketTimeoutException) {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
@@ -140,13 +171,17 @@ public class StoryListingActivity extends AppCompatActivity {
     }
 
     private void getTopStoryDetails(String id) {
-
-        progressDialog.show();
+        if (!swipeRefreshLayout.isRefreshing()) {
+            progressDialog.show();
+        } else {
+            swipeRefreshLayout.setRefreshing(true);
+        }
 
         RestClient.getRestClient().getStoryDetails(id).enqueue(new Callback<Story>() {
             @Override
             public void onResponse(Call<Story> call, Response<Story> response) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
+                onItemsLoadComplete();
                 if (response.code() == API_SUCCESS) {
                     Story story = response.body();
 
@@ -155,8 +190,9 @@ public class StoryListingActivity extends AppCompatActivity {
                             realmInstance.insertOrUpdate(story);
 
                             Utils.logd(TAG, "onSuccess ");
-                            storyArrayList.add(story);
+                            storyArrayList.add(0, story);
                             storyListingAdapter.notifyDataSetChanged();
+                            recyclerView.smoothScrollToPosition(0);
                         });
                     }
                 } else {
@@ -166,7 +202,8 @@ public class StoryListingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Story> call, Throwable t) {
-                progressDialog.dismiss();
+                dismissProgressDialog();
+                onItemsLoadComplete();
                 logd(TAG, "Error " + t.getMessage());
                 if (t instanceof SocketTimeoutException) {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
