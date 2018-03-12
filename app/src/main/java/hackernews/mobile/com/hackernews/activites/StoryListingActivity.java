@@ -22,6 +22,7 @@ import hackernews.mobile.com.hackernews.utils.RestClient;
 import hackernews.mobile.com.hackernews.utils.Utils;
 import hackernews.mobile.com.hackernews.utils.VerticalSpaceItemDecoration;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -163,9 +164,27 @@ public class StoryListingActivity extends AppCompatActivity {
                             Utils.logd(TAG, "onError " + error.getMessage());
                         });
                     }*/
+
                     for (int i = 0; i < 2; i++) {
-                        getTopStoryDetails(topStoriesArray.get(i));
+                        Story story = realm.where(Story.class).equalTo("storyId",
+                                topStoriesArray.get(i)).findFirst();
+                        if (story == null) {
+                            // for (int i = 0; i < 2; i++) {
+                            getTopStoryDetails(topStoriesArray.get(i));
+                            //}
+                        } else {
+                            RealmResults<Story> storyRealmResults = realm.where(Story.class).findAll();
+                            if (storyRealmResults.size() > 0) {
+                                storyArrayList.clear();
+                                storyArrayList.addAll(storyRealmResults);
+                                storyListingAdapter.notifyDataSetChanged();
+                            }
+                        }
                     }
+
+                    /*for (int i = 0; i < 2; i++) {
+                        getTopStoryDetails(topStoriesArray.get(i));
+                    }*/
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }
