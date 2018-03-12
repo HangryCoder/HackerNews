@@ -71,10 +71,10 @@ public class StoryDetailsActivity extends AppCompatActivity {
         commentsIdsArrayList = getIntent().getStringArrayListExtra(INTENT_COMMENT_IDS);
         Utils.logd(TAG, "story " + story.getCommentsIds());
 
-        setViews();
-
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        setViews();
     }
 
     private void setViews() {
@@ -87,6 +87,10 @@ public class StoryDetailsActivity extends AppCompatActivity {
         } else {
             storyUrlTV.setVisibility(View.GONE);
         }
+
+        //Adding Comment Count
+        tabLayout.getTabAt(0).setText(story.getCommentsCount() + " "
+                + getResources().getString(R.string.comments));
     }
 
     private void setupViewPager(ViewPager viewPager) {

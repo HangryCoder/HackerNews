@@ -2,12 +2,16 @@ package hackernews.mobile.com.hackernews.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by soniawadji on 11/03/18.
  */
 
-public class Comments {
+public class Comments extends RealmObject {
 
+    @SerializedName("id")
+    private String commentId;
     @SerializedName("time")
     private String commentTime;
     @SerializedName("by")
@@ -15,10 +19,16 @@ public class Comments {
     @SerializedName("text")
     private String commentString;
 
-    public Comments(String commentTime, String commentUser, String commentString) {
-        this.commentTime = commentTime;
-        this.commentUser = commentUser;
-        this.commentString = commentString;
+    public Comments() {
+
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public String getCommentTime() {

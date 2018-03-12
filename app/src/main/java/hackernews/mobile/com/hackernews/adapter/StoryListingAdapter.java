@@ -80,7 +80,9 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
             mainLayout.setOnClickListener(view -> {
                 Story story = storyArrayList.get(getAdapterPosition());
                 ArrayList<String> commentIdsArrayList = new ArrayList<>();
-                commentIdsArrayList.addAll(story.getCommentsIds());
+                if (story.getCommentsIds() != null) {
+                    commentIdsArrayList.addAll(story.getCommentsIds());
+                }
                 Intent intent = new Intent(context, StoryDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle bundle = new Bundle();
