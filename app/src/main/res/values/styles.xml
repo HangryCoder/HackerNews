@@ -92,5 +92,4 @@
         <item name="android:textSize">@dimen/story_date_parallex_text_size</item>
     </style>
 
-
 </resources>

@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -60,7 +61,9 @@ public class StoryListingActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(new ContextThemeWrapper(this,
+                android.R.style.Theme_Holo_Light_Dialog));
+        progressDialog.setCancelable(false);
         progressDialog.setMessage(getResources().getString(R.string.loading_message));
 
         realm = Realm.getDefaultInstance();

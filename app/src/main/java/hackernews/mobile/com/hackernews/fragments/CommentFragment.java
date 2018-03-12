@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,9 @@ public class CommentFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(new ContextThemeWrapper(getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog));
+        progressDialog.setCancelable(false);
         progressDialog.setMessage(getResources().getString(R.string.loading_message));
 
         commentsIdsArrayList = getArguments().getStringArrayList(INTENT_COMMENT_IDS);
