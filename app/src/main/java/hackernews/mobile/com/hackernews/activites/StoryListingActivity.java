@@ -78,6 +78,7 @@ public class StoryListingActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
                     int topStoriesLength = response.body().size();
+                    logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
                     for (int i = 0; i < topStoriesLength; i++) {
                         getTopStoryDetails(topStoriesArray.get(i));
@@ -101,7 +102,7 @@ public class StoryListingActivity extends AppCompatActivity {
             }
         });
 
-        Story story = new Story(1, "Blah Blah Blah", "www.w3c.org",
+      /*  Story story = new Story(1, "Blah Blah Blah", "www.w3c.org",
                 "12 mins ago", 10);
         storyArrayList.add(story);
 
@@ -123,7 +124,7 @@ public class StoryListingActivity extends AppCompatActivity {
 
         story = new Story(6, "Blah Blah Blah", "www.w3c.org",
                 "12 mins ago", 10);
-        storyArrayList.add(story);
+        storyArrayList.add(story);*/
     }
 
     private void getTopStoryDetails(String id) {
@@ -135,7 +136,9 @@ public class StoryListingActivity extends AppCompatActivity {
             public void onResponse(Call<Story> call, Response<Story> response) {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
-                    logd(TAG, response.body().getStoryTitle());
+                    // logd(TAG, response.body().getStoryTitle());
+                    storyArrayList.add(response.body());
+                    storyListingAdapter.notifyDataSetChanged();
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }

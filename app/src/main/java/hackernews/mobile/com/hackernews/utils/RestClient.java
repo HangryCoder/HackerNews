@@ -24,17 +24,14 @@ import static hackernews.mobile.com.hackernews.utils.Constants.FETCH_TOP_STORIES
 public class RestClient {
 
 
-    private static HttpLoggingInterceptor.Level level = DEBUG ? HttpLoggingInterceptor.Level.BODY
-            : HttpLoggingInterceptor.Level.NONE;
-
     public static Retrofit getRetrofitBuilder() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        /*OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(level))
-                .build();
+                .build();*/
 
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(okHttpClient)
+                .client(MyApplication.okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
