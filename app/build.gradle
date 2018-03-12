@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+//Realm
+apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 26
     defaultConfig {

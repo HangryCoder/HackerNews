@@ -19,6 +19,7 @@ import hackernews.mobile.com.hackernews.adapter.StoryListingAdapter;
 import hackernews.mobile.com.hackernews.model.Story;
 import hackernews.mobile.com.hackernews.utils.RestClient;
 import hackernews.mobile.com.hackernews.utils.VerticalSpaceItemDecoration;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,8 +78,19 @@ public class StoryListingActivity extends AppCompatActivity {
                     int topStoriesLength = response.body().size();
                     logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
-                    for (int i = 0; i < 2; i++) {
-                        getTopStoryDetails(topStoriesArray.get(i));
+
+                    try (Realm realmInstance = Realm.getDefaultInstance()) {
+                        realmInstance.executeTransactionAsync(realm -> {
+
+                        }, () -> {
+                            //onSuccess
+                            /*for (int i = 0; i < 2; i++) {
+                                getTopStoryDetails(topStoriesArray.get(i));
+                            }*/
+                        }, error -> {
+                            //onError
+
+                        });
                     }
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));

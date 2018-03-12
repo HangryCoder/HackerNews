@@ -5,18 +5,20 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by soniawadji on 10/03/18.
  */
 
-public class Story implements Parcelable{
+public class Story /*extends RealmObject*/ implements Parcelable {
 
+    @PrimaryKey
     @SerializedName("id")
-    private int storyId;
+    private String storyId;
     @SerializedName("descendants")
     private int commentsCount;
     @SerializedName("title")
@@ -32,7 +34,10 @@ public class Story implements Parcelable{
     @SerializedName("kids")
     private ArrayList<String> commentsIds;
 
-    public Story(int storyId, String storyTitle, String storyUrl, String storyTimestamp, int commentsCount) {
+    public Story() {
+    }
+
+    public Story(String storyId, String storyTitle, String storyUrl, String storyTimestamp, int commentsCount) {
         this.storyId = storyId;
         this.commentsCount = commentsCount;
         this.storyTitle = storyTitle;
@@ -40,7 +45,7 @@ public class Story implements Parcelable{
         this.storyTimestamp = storyTimestamp;
     }
 
-    public Story(int storyId, int commentsCount, String storyTitle, String storyUrl, String storyTimestamp,
+    public Story(String storyId, int commentsCount, String storyTitle, String storyUrl, String storyTimestamp,
                  int storyVotes, String storyBy, ArrayList<String> commentsIds) {
         this.storyId = storyId;
         this.commentsCount = commentsCount;
@@ -52,8 +57,9 @@ public class Story implements Parcelable{
         this.commentsIds = commentsIds;
     }
 
+
     protected Story(Parcel in) {
-        storyId = in.readInt();
+        storyId = in.readString();
         commentsCount = in.readInt();
         storyTitle = in.readString();
         storyUrl = in.readString();
@@ -99,11 +105,11 @@ public class Story implements Parcelable{
         this.commentsIds = commentsIds;
     }
 
-    public int getStoryId() {
+    public String getStoryId() {
         return storyId;
     }
 
-    public void setStoryId(int storyId) {
+    public void setStoryId(String storyId) {
         this.storyId = storyId;
     }
 
@@ -146,7 +152,7 @@ public class Story implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(storyId);
+        parcel.writeString(storyId);
         parcel.writeInt(commentsCount);
         parcel.writeString(storyTitle);
         parcel.writeString(storyUrl);
