@@ -32,7 +32,7 @@ public class ArticleFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-      /*  url = getArguments().getString(INTENT_STORY_URL);
+        url = getArguments().getString(INTENT_STORY_URL);
 
         //If Url is not empty then load url in webView
         //else display a text
@@ -45,7 +45,7 @@ public class ArticleFragment extends Fragment {
             }
         }else{
 
-        }*/
+        }
 
         return view;
     }

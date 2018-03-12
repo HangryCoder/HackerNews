@@ -77,9 +77,9 @@ public class StoryDetailsActivity extends AppCompatActivity {
 
         //Passing Url to ArticleFragment
         ArticleFragment articleFragment = new ArticleFragment();
-       /* Bundle articleBundle = new Bundle();
+        Bundle articleBundle = new Bundle();
         articleBundle.putString(INTENT_STORY_URL, story.getStoryUrl());
-        commentFragment.setArguments(articleBundle);*/
+        articleFragment.setArguments(articleBundle);
         adapter.addFragment(articleFragment, getResources().getString(R.string.article));
 
         viewPager.setAdapter(adapter);
