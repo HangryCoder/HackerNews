@@ -27,7 +27,7 @@ public class Story {
     @SerializedName("by")
     private String storyBy;
     @SerializedName("kids")
-    private JSONArray commentsIds;
+    private ArrayList<String> commentsIds;
 
     public Story(int storyId, String storyTitle, String storyUrl, String storyTimestamp, int commentsCount) {
         this.storyId = storyId;
@@ -38,7 +38,7 @@ public class Story {
     }
 
     public Story(int storyId, int commentsCount, String storyTitle, String storyUrl, String storyTimestamp,
-                 int storyVotes, String storyBy, JSONArray commentsIds) {
+                 int storyVotes, String storyBy, ArrayList<String> commentsIds) {
         this.storyId = storyId;
         this.commentsCount = commentsCount;
         this.storyTitle = storyTitle;
@@ -65,11 +65,11 @@ public class Story {
         this.storyBy = storyBy;
     }
 
-    public JSONArray getCommentsIds() {
+    public ArrayList<String> getCommentsIds() {
         return commentsIds;
     }
 
-    public void setCommentsIds(JSONArray commentsIds) {
+    public void setCommentsIds(ArrayList<String> commentsIds) {
         this.commentsIds = commentsIds;
     }
 

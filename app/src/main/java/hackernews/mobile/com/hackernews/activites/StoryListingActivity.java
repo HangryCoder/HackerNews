@@ -72,20 +72,15 @@ public class StoryListingActivity extends AppCompatActivity {
 
         progressDialog.show();
 
-        RestClient.getRestClient().fetchTopStoriesID().enqueue(new Callback<JSONArray>() {
+        RestClient.getRestClient().fetchTopStoriesID().enqueue(new Callback<ArrayList<String>>() {
             @Override
-            public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
+            public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
-                    // logd(TAG, response.body().toString());
-                    int topStoriesLength = response.body().length();
-                    JSONArray topStoriesArray = response.body();
+                    int topStoriesLength = response.body().size();
+                    ArrayList<String> topStoriesArray = response.body();
                     for (int i = 0; i < topStoriesLength; i++) {
-                        try {
-                            getTopStoryDetails(topStoriesArray.getString(i));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        getTopStoryDetails(topStoriesArray.get(i));
                     }
                 } else {
                     showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
@@ -93,11 +88,15 @@ public class StoryListingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JSONArray> call, Throwable t) {
+            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                 progressDialog.dismiss();
                 logd(TAG, "Error " + t.getMessage());
                 if (t instanceof SocketTimeoutException) {
+                    showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
+                } else if (t instanceof IOException) {
                     showToast(getApplicationContext(), getResources().getString(R.string.no_internet_connection));
+                } else {
+                    showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }
             }
         });
@@ -147,7 +146,11 @@ public class StoryListingActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 logd(TAG, "Error " + t.getMessage());
                 if (t instanceof SocketTimeoutException) {
+                    showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
+                } else if (t instanceof IOException) {
                     showToast(getApplicationContext(), getResources().getString(R.string.no_internet_connection));
+                } else {
+                    showToast(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
                 }
             }
         });

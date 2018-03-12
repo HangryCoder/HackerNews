@@ -2,6 +2,8 @@ package hackernews.mobile.com.hackernews.utils;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+
 import hackernews.mobile.com.hackernews.model.Story;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,7 +45,7 @@ public class RestClient {
 
     public interface HackerNewsAPI {
         @GET(FETCH_TOP_STORIES)
-        Call<JSONArray> fetchTopStoriesID();
+        Call<ArrayList<String>> fetchTopStoriesID();
 
         @GET("item/{id}.json?print=pretty")
         Call<Story> getStoryDetails(@Path("id") String id);
