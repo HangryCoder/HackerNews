@@ -1,19 +1,25 @@
 package hackernews.mobile.com.hackernews.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by soniawadji on 11/03/18.
  */
 
 public class Comments {
 
-    private String commentDate, commentTime, commentUser, topLevelComment, commentString;
+    private String commentDate;
+    @SerializedName("time")
+    private String commentTime;
+    @SerializedName("by")
+    private String commentUser;
+    @SerializedName("text")
+    private String commentString;
 
-    public Comments(String commentDate, String commentTime, String commentUser,
-                    String topLevelComment, String commentString) {
+    public Comments(String commentDate, String commentTime, String commentUser, String commentString) {
         this.commentDate = commentDate;
         this.commentTime = commentTime;
         this.commentUser = commentUser;
-        this.topLevelComment = topLevelComment;
         this.commentString = commentString;
     }
 
@@ -40,14 +46,6 @@ public class Comments {
 
     public void setCommentUser(String commentUser) {
         this.commentUser = commentUser;
-    }
-
-    public String getTopLevelComment() {
-        return topLevelComment;
-    }
-
-    public void setTopLevelComment(String topLevelComment) {
-        this.topLevelComment = topLevelComment;
     }
 
     public String getCommentString() {

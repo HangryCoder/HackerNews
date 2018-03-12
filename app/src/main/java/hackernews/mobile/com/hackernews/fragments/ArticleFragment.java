@@ -13,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 
+import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_STORY_URL;
+
 /**
  * Created by soniawadji on 11/03/18.
  */
@@ -21,6 +23,7 @@ public class ArticleFragment extends Fragment {
 
     @BindView(R.id.webView)
     WebView webView;
+    private String url = "";
 
     @Nullable
     @Override
@@ -29,8 +32,20 @@ public class ArticleFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        webView.setWebViewClient(new ArticleBrowser());
-        webView.loadUrl("http://www.google.com");
+      /*  url = getArguments().getString(INTENT_STORY_URL);
+
+        //If Url is not empty then load url in webView
+        //else display a text
+        if(url!=null){
+            if(!url.isEmpty()){
+                webView.setWebViewClient(new ArticleBrowser());
+                webView.loadUrl(url);
+            }else{
+
+            }
+        }else{
+
+        }*/
 
         return view;
     }

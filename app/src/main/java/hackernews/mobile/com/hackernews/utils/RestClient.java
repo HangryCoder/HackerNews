@@ -4,6 +4,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
+import hackernews.mobile.com.hackernews.model.Comments;
 import hackernews.mobile.com.hackernews.model.Story;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -14,7 +15,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 import static hackernews.mobile.com.hackernews.utils.Constants.BASE_URL;
-import static hackernews.mobile.com.hackernews.utils.Constants.DEBUG;
 import static hackernews.mobile.com.hackernews.utils.Constants.FETCH_TOP_STORIES;
 
 /**
@@ -46,6 +46,9 @@ public class RestClient {
 
         @GET("item/{id}.json?print=pretty")
         Call<Story> getStoryDetails(@Path("id") String id);
+
+        @GET("item/{id}.json?print=pretty")
+        Call<Comments> getCommentDetails(@Path("id") String id);
     }
 
 }

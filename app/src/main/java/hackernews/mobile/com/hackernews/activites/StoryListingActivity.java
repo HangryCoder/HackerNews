@@ -8,9 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -51,7 +48,7 @@ public class StoryListingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_listing);
+        setContentView(R.layout.activity_story_listing);
 
         ButterKnife.bind(this);
 
@@ -80,7 +77,7 @@ public class StoryListingActivity extends AppCompatActivity {
                     int topStoriesLength = response.body().size();
                     logd(TAG, "Size " + topStoriesLength);
                     ArrayList<String> topStoriesArray = response.body();
-                    for (int i = 0; i < topStoriesLength; i++) {
+                    for (int i = 0; i < 2; i++) {
                         getTopStoryDetails(topStoriesArray.get(i));
                     }
                 } else {
@@ -101,30 +98,6 @@ public class StoryListingActivity extends AppCompatActivity {
                 }
             }
         });
-
-      /*  Story story = new Story(1, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);
-
-        story = new Story(2, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);
-
-        story = new Story(3, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);
-
-        story = new Story(4, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);
-
-        story = new Story(5, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);
-
-        story = new Story(6, "Blah Blah Blah", "www.w3c.org",
-                "12 mins ago", 10);
-        storyArrayList.add(story);*/
     }
 
     private void getTopStoryDetails(String id) {
@@ -136,7 +109,6 @@ public class StoryListingActivity extends AppCompatActivity {
             public void onResponse(Call<Story> call, Response<Story> response) {
                 progressDialog.dismiss();
                 if (response.code() == API_SUCCESS) {
-                    // logd(TAG, response.body().getStoryTitle());
                     storyArrayList.add(response.body());
                     storyListingAdapter.notifyDataSetChanged();
                 } else {

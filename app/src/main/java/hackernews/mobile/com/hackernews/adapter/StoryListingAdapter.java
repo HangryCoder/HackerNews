@@ -2,6 +2,7 @@ package hackernews.mobile.com.hackernews.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import butterknife.ButterKnife;
 import hackernews.mobile.com.hackernews.R;
 import hackernews.mobile.com.hackernews.activites.StoryDetailsActivity;
 import hackernews.mobile.com.hackernews.model.Story;
+
+import static hackernews.mobile.com.hackernews.utils.Constants.INTENT_STORY;
 
 /**
  * Created by soniawadji on 10/03/18.
@@ -33,7 +36,7 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
 
     @Override
     public StoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.news_item_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.story_item_layout, parent, false);
         return new StoryHolder(view);
     }
 
@@ -74,8 +77,12 @@ public class StoryListingAdapter extends RecyclerView.Adapter<StoryListingAdapte
             ButterKnife.bind(this, itemView);
 
             mainLayout.setOnClickListener(view -> {
+                Story story = storyArrayList.get(getAdapterPosition());
                 Intent intent = new Intent(context, StoryDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(INTENT_STORY, story);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
 
             });

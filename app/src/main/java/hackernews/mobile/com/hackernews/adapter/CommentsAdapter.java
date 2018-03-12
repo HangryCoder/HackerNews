@@ -41,7 +41,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         holder.commentDetailsTV.setText(comments.getCommentDate() + " - " + comments.getCommentTime()
                 + " . " + comments.getCommentUser());
         holder.commentMessage.setText(comments.getCommentString());
-        holder.topLevelCommentTV.setText(comments.getTopLevelComment());
     }
 
     @Override
@@ -53,8 +52,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         @BindView(R.id.commentDetailsTV)
         TextView commentDetailsTV;
-        @BindView(R.id.topLevelCommentTV)
-        TextView topLevelCommentTV;
         @BindView(R.id.commentMessage)
         TextView commentMessage;
 

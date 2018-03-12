@@ -15,4 +15,11 @@ public class Constants {
     public static final String FETCH_TOP_STORIES = "topstories.json?print=pretty";
 
     public static final int API_SUCCESS = 200;
+
+    public static final String INTENT_STORY = "Story";
+
+    public static final String INTENT_COMMENT_IDS = "CommentsId";
+
+    public static final String INTENT_STORY_URL = "StoryUrl";
+
 }

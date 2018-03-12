@@ -1,5 +1,8 @@
 package hackernews.mobile.com.hackernews.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * Created by soniawadji on 10/03/18.
  */
 
-public class Story {
+public class Story implements Parcelable{
 
     @SerializedName("id")
     private int storyId;
@@ -48,6 +51,29 @@ public class Story {
         this.storyBy = storyBy;
         this.commentsIds = commentsIds;
     }
+
+    protected Story(Parcel in) {
+        storyId = in.readInt();
+        commentsCount = in.readInt();
+        storyTitle = in.readString();
+        storyUrl = in.readString();
+        storyTimestamp = in.readString();
+        storyVotes = in.readInt();
+        storyBy = in.readString();
+        commentsIds = in.createStringArrayList();
+    }
+
+    public static final Creator<Story> CREATOR = new Creator<Story>() {
+        @Override
+        public Story createFromParcel(Parcel in) {
+            return new Story(in);
+        }
+
+        @Override
+        public Story[] newArray(int size) {
+            return new Story[size];
+        }
+    };
 
     public int getStoryVotes() {
         return storyVotes;
@@ -113,4 +139,20 @@ public class Story {
         this.commentsCount = commentsCount;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(storyId);
+        parcel.writeInt(commentsCount);
+        parcel.writeString(storyTitle);
+        parcel.writeString(storyUrl);
+        parcel.writeString(storyTimestamp);
+        parcel.writeInt(storyVotes);
+        parcel.writeString(storyBy);
+        parcel.writeStringList(commentsIds);
+    }
 }
